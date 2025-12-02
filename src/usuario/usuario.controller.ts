@@ -1,34 +1,44 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
-import { CreateUsuarioDto } from './dto/request/create-usuario.dto';
-import { UpdateUsuarioDto } from './dto/request/update-usuario.dto';
+import { CriaUsuarioDto } from './dto/request/cria-usuario.dto';
+import { AtualizaUsuarioDto } from './dto/request/atualiza-usuario.dto';
 
-@Controller('usuario')
+@Controller('usuarios')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
   @Post()
-  create(@Body() createUsuarioDto: CreateUsuarioDto) {
-    return this.usuarioService.create(createUsuarioDto);
+  cria(@Body() dto: CriaUsuarioDto) {
+    return this.usuarioService.cria(dto);
   }
 
   @Get()
-  findAll() {
-    return this.usuarioService.findAll();
+  buscaTodos() {
+    return this.usuarioService.buscaTodos();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usuarioService.findOne(+id);
+  @Get('id/:id')
+  buscaPorId(@Param('id') id: string) {
+    return this.usuarioService.buscaPorId(+id);
+  }
+
+  @Get('email/:email')
+  buscaPorEmail(@Param('email') email: string) {
+    return this.usuarioService.buscaPorEmail(email);
+  }
+
+  @Get('nome/:nome')
+  buscaPorNome(@Param('nome') nome: string) {
+    return this.usuarioService.buscaPorNome(nome);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
-    return this.usuarioService.update(+id, updateUsuarioDto);
+  update(@Param('id') id: string, @Body() dto: AtualizaUsuarioDto) {
+    return this.usuarioService.atualiza(+id, dto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usuarioService.remove(+id);
+    return this.usuarioService.exclui(+id);
   }
 }

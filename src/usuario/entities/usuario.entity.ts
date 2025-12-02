@@ -7,7 +7,7 @@ export class Usuario extends Auditoria {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   nome: string;
 
   @Column({ unique: true })
